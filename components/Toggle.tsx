@@ -9,8 +9,8 @@ export default function Toggle({
         <button className={
             'cursor-pointer transition-colors duration-200 w-7 h-7 rounded flex items-center justify-center ' + (
                 isSelected ?
-                    'bg-gray-800' :
-                    'hover:bg-gray-800'
+                    'bg-white/10' :
+                    'hover:bg-white/10'
             )
         } onClick={onSelect}>{children}</button>
     )

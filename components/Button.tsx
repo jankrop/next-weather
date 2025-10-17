@@ -7,7 +7,7 @@ export default function Button({
 }) {
     return (
         <button className="
-            rounded-lg relative group bg-gray-800 cursor-pointers active:scale-95 transition-transform duration-200
+            rounded-lg relative group bg-gray-800 cursor-pointer active:scale-95 transition-transform duration-200
         ">
             <div className="
                 absolute -z-1 rounded-lg bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 w-full h-full
