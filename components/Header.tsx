@@ -7,7 +7,7 @@ export default function Header() {
     const [temperature, setTemperature] = useState('celsius');
 
     return (
-        <header className="bg-gray-900/50 text-gray-200 w-full border-b border-b-gray-800 backdrop-blur-md shadow-md shadow-gray-950/50 fixed">
+        <header className="bg-gray-900/50 text-gray-200 w-full border-b border-b-gray-800 backdrop-blur-md shadow-md shadow-gray-950/50 sticky">
             <div className="w-full max-w-[1000px] mx-auto flex items-center">
                 <div className="text-xl p-3">
                     Next weather

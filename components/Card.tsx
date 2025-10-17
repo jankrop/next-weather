@@ -6,7 +6,7 @@ export default function Card({
     children: ReactNode;
 }) {
     return (
-        <div className="bg-gray-900 p-3 border border-gray-800 rounded-xl shadow-lg shadow-gray-950">
+        <div className="bg-gray-900 p-3 border border-gray-800 rounded-xl shadow-md shadow-gray-950">
             {children}
         </div>
     )
