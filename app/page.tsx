@@ -18,7 +18,27 @@ export default function Page() {
                 className="absolute bottom-0 translate-y-1/2 mx-auto flex gap-3"
 
             >
-                <SearchInput placeholder="Search for places around the world..." />
+                <SearchInput
+                    suggestions={[
+                        "Warsaw, Poland",
+                        "Kraków, Poland",
+                        "Łódź, Poland",
+                        "Wrocław, Poland",
+                        "Poznań, Poland",
+                        "Gdańsk, Poland",
+                        "Szczecin, Poland",
+                        "Bydgoszcz, Poland",
+                        "Lublin, Poland",
+                        "Katowice, Poland",
+                        "Olsztyn, Poland",
+                        "Opole, Poland",
+                        "Rzeszów, Poland",
+                        "Kielce, Poland",
+                        "Białystok, Poland",
+                        "Gorzów Wielkopolski, Poland"
+                    ]}
+                    placeholder="Search for places around the world..."
+                />
                 <Button type="submit">Get weather</Button>
             </form>
         </div>
