@@ -10,12 +10,8 @@ export default function SearchInput({
 }) {
     const inputId = useId();
 
-    const [isFocused, setIsFocused] = useState(false)
+    const [isFocused, setIsFocused] = useState(false);
     const [search, setSearch] = useState("");
-
-    const matchingSuggestions = search === "" ? [] : suggestions
-        ?.filter(s => s.toLowerCase().startsWith(search.toLowerCase()))
-        .slice(0, 3)
 
     return (
         <div className="h-10.5">
@@ -42,12 +38,12 @@ export default function SearchInput({
                             className="m-[1px] ml-0 z-2 bg-gray-900 flex-1 pr-4 py-2 rounded-r-[20px] outline-none"
                             size={40} id={inputId} value={search}
                             onChange={e => {
-                                setSearch(e.target.value)
-                                if (onChange) onChange(e)  // onChange and onBlur are used by useForm
+                                setSearch(e.target.value);
+                                if (onChange) onChange(e);
                             }}
                             onBlur={e => {
-                                setIsFocused(false)
-                                if (onBlur) onBlur(e)
+                                setIsFocused(false);
+                                if (onBlur) onBlur(e);
                             }}
                             onFocus={() => setIsFocused(true)}
                             {...props}
@@ -56,11 +52,11 @@ export default function SearchInput({
                     </div>
                     <div
                         className="transition-all duration-200 overflow-hidden"
-                        style={{ height: matchingSuggestions?.length && isFocused ?
-                                32 * (matchingSuggestions?.length || 0) + 8 + 'px' : 0
+                        style={{ height: suggestions?.length && isFocused ?
+                                32 * (suggestions?.length || 0) + 8 + 'px' : 0
                         }}
                     >
-                        {matchingSuggestions?.map((suggestion, index) => (
+                        {suggestions?.map((suggestion, index) => (
                             <div
                                 key={index} onClick={() => setSearch(suggestion)}
                                 className="px-2 py-1 cursor-pointer hover:bg-primary hover:bg-clip-text hover:text-transparent"
