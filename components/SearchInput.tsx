@@ -1,8 +1,10 @@
+"use client"
+
 import {Search} from "react-feather";
 import {ComponentPropsWithoutRef, useId, useState} from "react";
 
 export default function SearchInput({
-    suggestions, ...props
+    suggestions, onChange, onBlur, ...props
 } : Omit<ComponentPropsWithoutRef<'input'>, 'defaultValue'> & {
     suggestions?: string[]
 }) {
@@ -39,8 +41,15 @@ export default function SearchInput({
                         <input
                             className="m-[1px] ml-0 z-2 bg-gray-900 flex-1 pr-4 py-2 rounded-r-[20px] outline-none"
                             size={40} id={inputId} value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
+                            onChange={e => {
+                                setSearch(e.target.value)
+                                if (onChange) onChange(e)  // onChange and onBlur are used by useForm
+                            }}
+                            onBlur={e => {
+                                setIsFocused(false)
+                                if (onBlur) onBlur(e)
+                            }}
+                            onFocus={() => setIsFocused(true)}
                             {...props}
                         />
                         <label htmlFor={inputId} className="hidden">{props.placeholder || 'Search'}</label>  {/* For accessibility */}

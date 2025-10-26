@@ -3,12 +3,15 @@
 import SearchInput from "@/components/SearchInput";
 import Button from "@/components/Button";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useRouter} from "next/navigation";
 
 export default function Page() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<{place: string}>();
 
-    const onSearch: SubmitHandler<{ place: string }> = data => {
+    const router = useRouter();
 
+    const onSearch: SubmitHandler<{ place: string }> = data => {
+        router.push("/weather");
     }
 
     return (
@@ -16,7 +19,7 @@ export default function Page() {
             <h1 className="text-4xl">Accurate weather forecasts worldwide</h1>
             <form
                 className="absolute bottom-0 translate-y-1/2 mx-auto flex gap-3"
-
+                onSubmit={handleSubmit(onSearch)}
             >
                 <SearchInput
                     suggestions={[
@@ -38,6 +41,7 @@ export default function Page() {
                         "Gorzów Wielkopolski, Poland"
                     ]}
                     placeholder="Search for places around the world..."
+                    {...register("place", { required: true })}
                 />
                 <Button type="submit">Get weather</Button>
             </form>
