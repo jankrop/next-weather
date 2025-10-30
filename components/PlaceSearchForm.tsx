@@ -3,7 +3,6 @@ import Button from "@/components/Button";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import {useDebounce} from "use-debounce";
-import {useEffect} from "react";
 import {useQuery} from "@tanstack/react-query";
 
 type Place = {
@@ -13,7 +12,7 @@ type Place = {
 }
 
 export default function PlaceSearchForm({ className = "" }) {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<{place: string}>();
+    const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<{place: string}>();
 
     const place = watch("place");
     const [debouncedPlace] = useDebounce(place, 500);
@@ -30,14 +29,10 @@ export default function PlaceSearchForm({ className = "" }) {
         refetchOnWindowFocus: false,
     })
 
-    // useEffect(() => {
-    //     if (debouncedPlace) geocodingQuery.refetch();
-    // }, [debouncedPlace]);
-
     const router = useRouter();
 
     const onSearch: SubmitHandler<{ place: string }> = data => {
-        router.push(`/weather?city=${data.place}`);
+        router.push(`/weather?place=${data.place}`);
     }
 
     return (
@@ -52,8 +47,16 @@ export default function PlaceSearchForm({ className = "" }) {
                         .filter((v, i, a) => a.indexOf(v) === i)  // Get only unique entries
                         .slice(0, 5)
                 }
+                loading={geocodingQuery.isLoading}
                 placeholder="Search for places around the world..."
-                {...register("place", { required: true })}
+                {...register("place", {
+                    required: "A location is required",
+                    validate: {
+                        isRealLocation: () => (geocodingQuery.data as Place[]).length != 0
+                    }
+                })}
+                isValid={!errors.place}
+                onSuggestionSelect={s => setValue('place', s)}
             />
             <Button type="submit">Get weather</Button>
         </form>

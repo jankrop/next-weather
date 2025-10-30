@@ -1,10 +1,17 @@
 "use client"
 
 import Toggle from "@/components/Toggle";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import settingsContext from "@/contexts/SettingsContext";
 
 export default function Header() {
-    const [temperature, setTemperature] = useState('celsius');
+    const { settings, setSettings } = useContext(settingsContext);
+
+    const temperature = settings.temperature;
+
+    const setTemperature = (temp: 'celsius' | 'fahrenheit' | 'kelvin') => {
+        setSettings({...settings, temperature: temp});
+    }
 
     return (
         <header className="bg-gray-900/50 text-gray-200 w-full border-b border-b-gray-800 backdrop-blur-md shadow-md shadow-gray-950/50 sticky">

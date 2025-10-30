@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import {ReactNode} from "react";
+import SettingsProvider from "@/providers/SettingsProvider";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -18,17 +19,19 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
         <html lang="en">
             <body className={inter.className + ' bg-gray-900 text-gray-200 antialiased min-h-screen flex flex-col'}>
                 <ReactQueryProvider>
-                    <Header />
-                    <main className="flex-1">
-                        {children}
-                    </main>
-                    <Footer />
+                    <SettingsProvider>
+                        <Header />
+                        <main className="flex-1">
+                            {children}
+                        </main>
+                        <Footer />
+                    </SettingsProvider>
                 </ReactQueryProvider>
             </body>
         </html>

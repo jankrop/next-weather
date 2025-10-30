@@ -1,28 +1,36 @@
 "use client"
 
 import {Search} from "react-feather";
-import {ComponentPropsWithoutRef, useId, useState} from "react";
+import {ComponentPropsWithoutRef, useEffect, useId, useState} from "react";
 
 export default function SearchInput({
-    suggestions, onChange, onBlur, ...props
+    suggestions, loading, isValid = true, onSuggestionSelect, onChange, onBlur, ...props
 } : Omit<ComponentPropsWithoutRef<'input'>, 'defaultValue'> & {
-    suggestions?: string[]
+    suggestions?: string[],
+    loading?: boolean,
+    isValid: boolean,
+    onSuggestionSelect: (suggestion: string) => void,
 }) {
     const inputId = useId();
 
     const [isFocused, setIsFocused] = useState(false);
     const [search, setSearch] = useState("");
+    const [displaySuggestions, setDisplaySuggestions] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!loading && suggestions !== undefined) setDisplaySuggestions(suggestions);
+    }, [loading, suggestions]);
 
     return (
         <div className="h-10.5">
             <div className="relative flex flex-col bg-gray-800 rounded-[21px] animation">
                 <div className={
-                    "absolute z-0 rounded-[21px] bg-primary w-full h-full blur-md transition-opacity duration-200 " +
-                    (isFocused ? "opacity-50" : "opacity-0")
+                    "absolute z-0 rounded-[21px] w-full h-full blur-md transition-opacity duration-200 " +
+                    (isFocused || !isValid ? "opacity-50" : "opacity-0") + " " + (isValid ? "bg-primary" : "bg-rose-500")
                 }/>
                 <div className={
-                    "absolute z-1 rounded-[21px] bg-primary w-full h-full transition-opacity duration-200 " +
-                    (isFocused ? "opacity-100" : "opacity-0")
+                    "absolute z-1 rounded-[21px] w-full h-full transition-opacity duration-200 " +
+                    (isFocused || !isValid ? "opacity-100" : "opacity-0") + " " + (isValid ? "bg-primary" : "bg-rose-500")
                 }/>
                 <div className="
                     m-[1px] z-2 bg-gray-900 rounded-[20px]
@@ -52,13 +60,16 @@ export default function SearchInput({
                     </div>
                     <div
                         className="transition-all duration-200 overflow-hidden"
-                        style={{ height: suggestions?.length && isFocused ?
-                                32 * (suggestions?.length || 0) + 8 + 'px' : 0
+                        style={{ height: displaySuggestions.length && isFocused ?
+                                32 * (displaySuggestions.length || 0) + 8 + 'px' : 0
                         }}
                     >
-                        {suggestions?.map((suggestion, index) => (
+                        {displaySuggestions.map((suggestion, index) => (
                             <div
-                                key={index} onClick={() => setSearch(suggestion)}
+                                key={index} onClick={() => {
+                                    setSearch(suggestion);
+                                    onSuggestionSelect(suggestion);
+                                }}
                                 className="px-2 py-1 cursor-pointer hover:bg-primary hover:bg-clip-text hover:text-transparent"
                             >
                                 {suggestion}
