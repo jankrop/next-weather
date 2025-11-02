@@ -27,7 +27,7 @@ export default function RootLayout({
                 <ReactQueryProvider>
                     <SettingsProvider>
                         <Header />
-                        <main className="flex-1">
+                        <main className="flex-1 flex justify-center">
                             {children}
                         </main>
                         <Footer />

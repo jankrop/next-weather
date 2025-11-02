@@ -7,6 +7,7 @@ import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
 import {fetchCurrentWeather, fetchForecast, fetchGeocodingData} from "@/api";
 import {ArrowUp, Navigation2} from "react-feather";
+import ForecastEntry from "@/components/ForecastEntry";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -45,14 +46,14 @@ export default function Page() {
         'W', 'WNW', 'NW', 'NNW',
     ][Math.round(currentWeather?.wind.deg || 0) % 16]
 
-    console.log(currentWeather)
+    console.log(forecast)
 
     return (
-        <div className="w-full max-w-[800px] mx-auto">
+        <div className="w-full max-w-[800px] mx-auto flex flex-col">
             { !!place &&
                 <h1 className="text-4xl my-6">{place.name}{!!place.state && ", " + place.state}, {place.country}</h1>
             }
-            <div className="flex gap-6">
+            <div className="flex gap-6 max-h-full">
                 {!!currentWeather &&
                 <div className="flex-1 flex flex-col gap-6">
                     <Card className="p-6 flex flex-col gap-3">
@@ -99,12 +100,10 @@ export default function Page() {
                     </div>
                 </div>
                 }
-                <div className="flex-1 flex flex-col gap-6">
-                    <Card className="p-3 text-xl flex items-center gap-3">
-                        10:00
-                        <WeatherIcon iconId={"10d"}/>
-                        <TemperatureConverter kelvin={293} />
-                    </Card>
+                <div className="flex-1 flex flex-col gap-6 h-[calc(100vh-200px)] overflow-y-scroll overflow-x-hidden">
+                    { !!forecast && forecast.list.map((weather, i) => (
+                        <ForecastEntry key={i} weather={weather} isSelected={false} onClick={() => {}} />
+                    ))}
                 </div>
             </div>
         </div>
