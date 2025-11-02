@@ -3,7 +3,8 @@ import Button from "@/components/Button";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import {useDebounce} from "use-debounce";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {fetchGeocodingData} from "@/api";
 
 type Place = {
     name: string;
@@ -20,11 +21,7 @@ export default function PlaceSearchForm({ className = "" }) {
     const geocodingQuery = useQuery({
         queryKey: ["place", debouncedPlace],
         staleTime: Infinity,
-        queryFn: async () => {
-            const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${debouncedPlace}&limit=10&appid=4083d44a25bea4846e95b56d01ac3795`)
-            console.log(res)
-            return res.json();
-        },
+        queryFn: () => fetchGeocodingData(debouncedPlace),
         enabled: !!debouncedPlace,
         refetchOnWindowFocus: false,
     })
@@ -34,6 +31,8 @@ export default function PlaceSearchForm({ className = "" }) {
     const onSearch: SubmitHandler<{ place: string }> = data => {
         router.push(`/weather?place=${data.place}`);
     }
+
+    const queryClient = useQueryClient();
 
     return (
         <form
@@ -52,7 +51,13 @@ export default function PlaceSearchForm({ className = "" }) {
                 {...register("place", {
                     required: "A location is required",
                     validate: {
-                        isRealLocation: () => (geocodingQuery.data as Place[]).length != 0
+                        isRealLocation: async value => {
+                            const data = await queryClient.fetchQuery({
+                                queryKey: ["place", value],
+                                queryFn: () => fetchGeocodingData(value)
+                            })
+                            return data?.length > 0
+                        }
                     }
                 })}
                 isValid={!errors.place}

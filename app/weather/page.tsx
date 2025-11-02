@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation";
 import Card from "@/components/Card";
 import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
+import {fetchCurrentWeather, fetchForecast, fetchGeocodingData} from "@/api";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -13,11 +14,7 @@ export default function Page() {
     const { data: places } = useQuery({
         queryKey: ['place', placeName],
         staleTime: Infinity,
-        queryFn: async () => {
-            const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${placeName}&limit=10&appid=4083d44a25bea4846e95b56d01ac3795`);
-            console.log(res);
-            return res.json();
-        },
+        queryFn: () => fetchGeocodingData(placeName),
         enabled: !!placeName,
         refetchOnWindowFocus: false,
     })
@@ -27,11 +24,7 @@ export default function Page() {
     const { data: currentWeather } = useQuery({
         queryKey: ['weather', place?.lat, place?.lon],
         staleTime: 6_000_000,
-        queryFn: async () => {
-            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${place?.lat}&lon=${place?.lon}&appid=4083d44a25bea4846e95b56d01ac3795`);
-            console.log(res)
-            return res.json();
-        },
+        queryFn: () => fetchCurrentWeather(place?.lat, place?.lon),
         enabled: !!place,
         refetchOnWindowFocus: false,
     })
@@ -39,13 +32,12 @@ export default function Page() {
     const { data: forecast } = useQuery({
         queryKey: ['forecast', place?.lat, place?.lon],
         staleTime: 6_000_000,
-        queryFn: async () => {
-            const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${place?.lat}&lon=${place?.lon}&appid=4083d44a25bea4846e95b56d01ac3795`)
-            return res.json()
-        },
+        queryFn: () => fetchForecast(place?.lat, place?.lon),
         enabled: !!place,
         refetchOnWindowFocus: false,
     })
+
+    console.log(currentWeather)
 
     return (
         <div className={"w-full max-w-[800px] mx-auto"}>
@@ -53,7 +45,7 @@ export default function Page() {
                 <h1 className="text-4xl my-6">{place.name}{!!place.state && ", " + place.state}, {place.country}</h1>
             }
             <Card className="w-96 p-6">
-                {currentWeather && <>
+                {!!currentWeather && <>
                     <div className="flex items-center gap-3">
                         <WeatherIcon iconId={currentWeather.weather[0].icon} size={96} strokeWidth={1} />
                         <div>
