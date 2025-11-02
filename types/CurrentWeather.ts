@@ -13,7 +13,7 @@ type CurrentWeather = {
     },
     wind: {
         speed: number,
-        degree: number,
+        deg: number,
     },
 }
 

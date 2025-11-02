@@ -1,7 +1,7 @@
 "use client"
 
 import Toggle from "@/components/Toggle";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import settingsContext from "@/contexts/SettingsContext";
 import Link from "next/link";
 
