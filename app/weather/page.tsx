@@ -6,7 +6,7 @@ import Card from "@/components/Card";
 import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
 import {fetchCurrentWeather, fetchForecast, fetchGeocodingData} from "@/api";
-import {ArrowUp, Navigation2} from "react-feather";
+import {Navigation2} from "react-feather";
 import ForecastEntry from "@/components/ForecastEntry";
 
 export default function Page() {
@@ -44,7 +44,7 @@ export default function Page() {
         'E', 'ESE', 'SE', 'SSE',
         'S', 'SSW', 'SW', 'WSW',
         'W', 'WNW', 'NW', 'NNW',
-    ][Math.round(currentWeather?.wind.deg || 0) % 16]
+    ][Math.round((currentWeather?.wind.deg || 0) / 22.5) % 16]
 
     console.log(forecast)
 

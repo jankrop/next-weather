@@ -22,7 +22,7 @@ export default function ForecastEntry({
                     })}
                 </div>
             )}
-            <Card className="flex gap-3 p-3 text-xl items-center">
+            <Card className="flex gap-3 p-3 text-xl items-center" onClick={onClick}>
                 <div className="w-16">
                     {hour.toString().padStart(2, "0")}:00
                 </div>
