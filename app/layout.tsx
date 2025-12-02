@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import {ReactNode} from "react";
 import SettingsProvider from "@/providers/SettingsProvider";
+import {NextIntlClientProvider} from "next-intl";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -25,13 +26,15 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className + ' bg-gray-900 text-gray-200 antialiased min-h-screen flex flex-col'}>
                 <ReactQueryProvider>
-                    <SettingsProvider>
-                        <Header />
-                        <main className="flex-1 flex justify-center">
-                            {children}
-                        </main>
-                        <Footer />
-                    </SettingsProvider>
+                    <NextIntlClientProvider>
+                        <SettingsProvider>
+                            <Header />
+                            <main className="flex-1 flex justify-center">
+                                {children}
+                            </main>
+                            <Footer />
+                        </SettingsProvider>
+                    </NextIntlClientProvider>
                 </ReactQueryProvider>
             </body>
         </html>

@@ -1,0 +1,29 @@
+{
+  "common": {
+    "title": "Next weather",
+    "footer": {
+      "author": "Made with \u2764 and \u2615 by ",
+      "author-name": "Jan Kropiwnicki",
+      "weather-data": "Weather data from ",
+      "openweathermap": "OpenWeatherMap"
+    },
+    "units": {
+      "label": "Temperature units",
+      "celsius": "°C",
+      "fahrenheit": "°F",
+      "kelvin": "K"
+    }
+  },
+  "home-page": {
+    "header": "Accurate weather forecasts worldwide",
+    "search-bar": "Search for places around the world...",
+    "get-weather": "Get weather"
+  },
+  "weather": {
+    "forecast": "Forecast",
+    "feels-like": "Feels like: ",
+    "pressure": "Pressure",
+    "humidity": "Humidity",
+    "wind": "Wind"
+  }
+}

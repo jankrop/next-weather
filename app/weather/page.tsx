@@ -10,6 +10,7 @@ import {Navigation2} from "react-feather";
 import ForecastEntry from "@/components/ForecastEntry";
 import CardSkeleton from "@/components/CardSkeleton";
 import NotFound from "@/app/not-found";
+import {useTranslations} from "next-intl";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -40,6 +41,8 @@ export default function Page() {
         enabled: !!place,
         refetchOnWindowFocus: false,
     })
+
+    const t = useTranslations();
 
     const windDirection = [
         'N', 'NNE', 'NE', 'ENE',
@@ -93,13 +96,13 @@ export default function Page() {
                             </Card>
                             <div className="flex gap-4">
                                 <Card className="flex-1 p-6 flex flex-col justify-center h-46">
-                                    <div className="text-gray-400">Pressure</div>
+                                    <div className="text-gray-400">{t('weather.pressure')}</div>
                                     <div className="text-2xl mb-3">{currentWeather!.main.pressure} hPa</div>
-                                    <div className="text-gray-400">Humidity</div>
+                                    <div className="text-gray-400">{t("weather.humidity")}</div>
                                     <div className="text-2xl">{currentWeather!.main.humidity}%</div>
                                 </Card>
                                 <Card className="flex-1 px-6 flex flex-col justify-between items-stretch h-46">
-                                    <div className="text-gray-400 pb-1">Wind</div>
+                                    <div className="text-gray-400 pb-1">{t("weather.wind")}</div>
                                     <div className="flex-1 flex justify-center items-center">
                                         <div
                                             className="rounded-full border-2 border-gray-600 w-24 h-24 flex justify-center items-center"
@@ -119,7 +122,7 @@ export default function Page() {
                 </div>
 
                 <div className="w-full md:w-72 lg:w-96 flex flex-col items-stretch gap-4 max-w-96">
-                    <h3 className="text-2xl">Forecast</h3>
+                    <h3 className="text-2xl">{t("weather.forecast")}</h3>
                     {isForecastLoading ? (
                         Array.from(Array(20).keys()).map((i) => (
                             <CardSkeleton key={i} className="h-13.5" />
