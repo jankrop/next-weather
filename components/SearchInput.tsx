@@ -22,7 +22,7 @@ export default function SearchInput({
     }, [loading, suggestions]);
 
     return (
-        <div className="h-10.5 w-full">
+        <div className="h-10.5 w-full md:max-w-105">
             <div className="relative flex flex-col bg-gray-800 rounded-[21px] animation">
                 <div className={
                     "absolute z-0 rounded-[21px] w-full h-full blur-md transition-opacity duration-200 " +
