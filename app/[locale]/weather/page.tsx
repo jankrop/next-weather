@@ -1,46 +1,31 @@
 "use client"
 
-import {useQuery} from "@tanstack/react-query";
 import {useSearchParams} from "next/navigation";
 import Card from "@/components/Card";
 import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
-import {fetchCurrentWeather, fetchForecast, fetchGeocodingData} from "@/api";
 import {Navigation2} from "react-feather";
 import ForecastEntry from "@/components/ForecastEntry";
 import CardSkeleton from "@/components/CardSkeleton";
-import NotFound from "@/app/not-found";
+import NotFound from "@/app/[locale]/not-found";
 import {useTranslations} from "next-intl";
+import Alert from "@/components/Alert";
+import useGeocodingQuery from "@/queries/useGeocodingQuery";
+import useWeatherQuery from "@/queries/useWeatherQuery";
+import useForecastQuery from "@/queries/useForecastQuery";
+import {useLocale} from "use-intl";
 
 export default function Page() {
     const searchParams = useSearchParams();
     const placeName = searchParams.get("place");
+    const locale = useLocale();
 
-    const { data: places, isLoading: isPlacesLoading } = useQuery({
-        queryKey: ['place', placeName],
-        staleTime: Infinity,
-        queryFn: () => fetchGeocodingData(placeName),
-        enabled: !!placeName,
-        refetchOnWindowFocus: false,
-    })
+    const { data: places, isLoading: isPlacesLoading, isError: isPlacesError } = useGeocodingQuery(placeName, locale);
 
     const place = !!places ? places[0] : null
 
-    const { data: currentWeather, isLoading: isWeatherLoading } = useQuery({
-        queryKey: ['weather', place?.lat, place?.lon],
-        staleTime: 6_000_000,
-        queryFn: () => fetchCurrentWeather(place?.lat, place?.lon),
-        enabled: !!place,
-        refetchOnWindowFocus: false,
-    })
-
-    const { data: forecast, isLoading: isForecastLoading } = useQuery({
-        queryKey: ['forecast', place?.lat, place?.lon],
-        staleTime: 6_000_000,
-        queryFn: () => fetchForecast(place?.lat, place?.lon),
-        enabled: !!place,
-        refetchOnWindowFocus: false,
-    })
+    const { data: currentWeather, isLoading: isWeatherLoading, isError: isWeatherError } = useWeatherQuery(place, locale)
+    const { data: forecast, isLoading: isForecastLoading, isError: isForecastError } = useForecastQuery(place, locale)
 
     const t = useTranslations();
 
@@ -59,15 +44,20 @@ export default function Page() {
 
     return (
         <div className="w-full flex flex-col items-center p-4 pt-0">
-            { isPlacesLoading || places?.length === 0 ? (
+            { isPlacesError || isWeatherError || isForecastError ? (
+                <Alert>
+                    An error occurred while requesting data.
+                </Alert>
+            ) : null }
+            { isPlacesLoading || isPlacesError || places?.length === 0 ? (
                     <CardSkeleton className={"w-full max-w-200 h-10 my-4"} />
                 ) : (
-                    <h1 className="text-4xl my-6">{place!.name}{!!place!.state && ", " + place!.state}, {place!.country}</h1>
+                    <h1 className="text-4xl my-6">{place!.name}</h1>
                 )
             }
             <div className="flex flex-col md:flex-row items-center md:items-start justify-center w-full gap-4 md:gap-12 max-h-full">
                 <div className="w-full md:w-96 flex flex-col items-stretch gap-4 max-w-96 md:sticky md:top-17">
-                    {isWeatherLoading ? (
+                    {isWeatherLoading || isWeatherError ? (
                         <>
                             <CardSkeleton className="h-46" />
                             <div className="flex gap-4">
@@ -85,7 +75,7 @@ export default function Page() {
                                             <TemperatureConverter kelvin={currentWeather!.main.temp} />
                                         </div>
                                         <div className="text-lg">
-                                            Feels like: <TemperatureConverter kelvin={currentWeather!.main.feels_like} />
+                                            {t("weather.feels-like")}<TemperatureConverter kelvin={currentWeather!.main.feels_like} />
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +113,7 @@ export default function Page() {
 
                 <div className="w-full md:w-72 lg:w-96 flex flex-col items-stretch gap-4 max-w-96">
                     <h3 className="text-2xl">{t("weather.forecast")}</h3>
-                    {isForecastLoading ? (
+                    {isForecastLoading || isForecastError ? (
                         Array.from(Array(20).keys()).map((i) => (
                             <CardSkeleton key={i} className="h-13.5" />
                         ))

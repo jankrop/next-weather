@@ -1,6 +1,9 @@
 import Link from "@/components/Link";
+import {useTranslations} from "next-intl";
 
 export default function Footer() {
+    const t = useTranslations("common")
+
     return (
         <footer className="
             bg-gray-900 text-gray-200 w-full p-3
@@ -8,10 +11,10 @@ export default function Footer() {
             flex flex-col md:flex-row justify-center items-center gap-3 md:gap-12 lg:gap-24
         ">
             <span>
-                Made with &#x2764; and &#x2615; by <Link external href="https://github.com/jankrop">Jan Kropiwnicki</Link>
+                {t("footer.author")}<Link external href="https://github.com/jankrop">{t("footer.author-name")}</Link>
             </span>
             <span>
-                Weather data from <Link external href="https://openweathermap.org/">OpenWeatherMap</Link>
+                {t("footer.weather-data")}<Link external href="https://openweathermap.org/">{t("footer.openweathermap")}</Link>
             </span>
         </footer>
     )

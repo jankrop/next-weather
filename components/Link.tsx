@@ -1,5 +1,5 @@
 import {ComponentPropsWithoutRef} from "react";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
 
 function CustomLink({
     external, children, ...props

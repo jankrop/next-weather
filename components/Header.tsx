@@ -3,7 +3,7 @@
 import Toggle from "@/components/Toggle";
 import {useContext, useState} from "react";
 import settingsContext from "@/contexts/SettingsContext";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
 import {Settings, X} from "react-feather";
 
 export default function Header() {
@@ -18,7 +18,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="bg-gray-900/50 text-gray-200 w-full border-b border-b-gray-800 backdrop-blur-md shadow-md shadow-gray-950/50 sticky top-0">
+            <header className="bg-gray-900/50 text-gray-200 w-full border-b border-b-gray-800 backdrop-blur-sm shadow-md shadow-gray-950/50 sticky top-0">
                 <div className="w-full max-w-[1000px] mx-auto flex items-center px-3">
                     <div className="text-xl p-3">
                         <Link href="/">Next weather</Link>

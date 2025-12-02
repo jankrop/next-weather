@@ -2,6 +2,7 @@ import CurrentWeather from "@/types/CurrentWeather";
 import Card from "@/components/Card";
 import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
+import {useLocale} from "use-intl";
 
 export default function ForecastEntry({
     weather, onClick
@@ -11,11 +12,13 @@ export default function ForecastEntry({
     const date = new Date(weather.dt * 1000);
     const hour = new Date(weather.dt * 1000).getHours();
 
+    const locale = useLocale();
+
     return (
         <>
             {hour === 1 && (
                 <div className="text-gray-400 text-center">
-                    {date.toLocaleDateString("en-UK", {
+                    {date.toLocaleDateString(locale, {
                         day: "numeric",
                         month: "short",
                         weekday: "long",

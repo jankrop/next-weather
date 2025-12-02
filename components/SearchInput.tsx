@@ -70,7 +70,7 @@ export default function SearchInput({
                                     setSearch(suggestion);
                                     onSuggestionSelect(suggestion);
                                 }}
-                                className="px-2 py-1 cursor-pointer hover:bg-primary hover:bg-clip-text hover:text-transparent"
+                                className="px-2 py-1 cursor-pointer hover:bg-primary hover:bg-clip-text hover:text-transparent overflow-hidden text-nowrap text-ellipsis"
                             >
                                 {suggestion}
                             </div>
