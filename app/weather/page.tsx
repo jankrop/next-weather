@@ -49,13 +49,13 @@ export default function Page() {
     console.log(forecast)
 
     return (
-        <div className="w-full max-w-[800px] mx-auto flex flex-col">
+        <div className="w-full flex flex-col items-center px-4">
             { !!place &&
                 <h1 className="text-4xl my-6">{place.name}{!!place.state && ", " + place.state}, {place.country}</h1>
             }
-            <div className="flex gap-6 max-h-full">
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-center w-full gap-4 md:gap-12 max-h-full">
                 {!!currentWeather &&
-                <div className="flex-1 flex flex-col gap-6">
+                <div className="w-full md:w-96 flex flex-col items-stretch gap-4 max-w-96 md:sticky md:top-17">
                     <Card className="p-6 flex flex-col gap-3">
                         {!!currentWeather && <>
                             <div className="flex items-center gap-3">
@@ -75,14 +75,14 @@ export default function Page() {
                             }</div>
                         </>}
                     </Card>
-                    <div className="flex gap-6">
-                        <Card className="flex-1 p-6 flex flex-col justify-center">
+                    <div className="flex gap-4">
+                        <Card className="flex-1 p-6 flex flex-col justify-center h-46">
                             <div className="text-gray-400">Pressure</div>
                             <div className="text-2xl mb-3">{currentWeather.main.pressure} hPa</div>
                             <div className="text-gray-400">Humidity</div>
                             <div className="text-2xl">{currentWeather.main.humidity}%</div>
                         </Card>
-                        <Card className="flex-1 px-6 aspect-square flex flex-col">
+                        <Card className="flex-1 px-6 flex flex-col justify-between items-stretch h-46">
                             <div className="text-gray-400 pb-1">Wind</div>
                             <div className="flex-1 flex justify-center items-center">
                                 <div
@@ -100,7 +100,8 @@ export default function Page() {
                     </div>
                 </div>
                 }
-                <div className="flex-1 flex flex-col gap-6 h-[calc(100vh-200px)] overflow-y-scroll overflow-x-hidden">
+                <div className="w-full md:w-72 lg:w-96 flex flex-col items-stretch gap-4 max-w-96">
+                    <h3 className="text-2xl">Forecast</h3>
                     { !!forecast && forecast.list.map((weather, i) => (
                         <ForecastEntry key={i} weather={weather} isSelected={false} onClick={() => {}} />
                     ))}

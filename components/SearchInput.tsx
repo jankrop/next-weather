@@ -22,7 +22,7 @@ export default function SearchInput({
     }, [loading, suggestions]);
 
     return (
-        <div className="h-10.5">
+        <div className="h-10.5 w-full">
             <div className="relative flex flex-col bg-gray-800 rounded-[21px] animation">
                 <div className={
                     "absolute z-0 rounded-[21px] w-full h-full blur-md transition-opacity duration-200 " +
@@ -43,8 +43,8 @@ export default function SearchInput({
                             <Search size="24" />
                         </div>
                         <input
-                            className="m-[1px] ml-0 z-2 bg-gray-900 flex-1 pr-4 py-2 rounded-r-[20px] outline-none"
-                            size={40} id={inputId} value={search}
+                            className="m-[1px] ml-0 z-2 bg-gray-900 flex-1 pr-4 py-2 rounded-r-[20px] sm:rounded-l-none outline-none"
+                            id={inputId} value={search}
                             onChange={e => {
                                 setSearch(e.target.value);
                                 if (onChange) onChange(e);

@@ -1,13 +1,13 @@
 import {ComponentPropsWithoutRef} from "react";
 
 export default function Button({
-    children, ...props
+    children, className, ...props
 }: ComponentPropsWithoutRef<'button'>) {
     return (
         <button
-            className="
-                rounded-lg relative group bg-gray-800 cursor-pointer active:scale-95 transition-transform duration-200
-            " {...props}
+            className={
+                "rounded-lg relative group bg-gray-800 cursor-pointer active:scale-95 transition-transform duration-200 "
+            + className} {...props}
         >
             <div className="
                 absolute z-0 rounded-lg bg-primary w-full h-full

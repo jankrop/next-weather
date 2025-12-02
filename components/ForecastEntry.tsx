@@ -14,7 +14,7 @@ export default function ForecastEntry({
     return (
         <>
             {hour === 1 && (
-                <div className="text-gray-400 text-center -m-3">
+                <div className="text-gray-400 text-center">
                     {date.toLocaleDateString("en-UK", {
                         day: "numeric",
                         month: "short",
