@@ -1,7 +1,7 @@
 type Place = {
-    name: string,
-    lat: number,
-    lon: number,
-}
+    name: string;
+    lat: number;
+    lon: number;
+};
 
 export default Place;

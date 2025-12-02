@@ -1,14 +1,15 @@
-import {createContext} from "react"
+import { createContext } from "react";
 import Settings from "@/types/Settings";
 
 const settingsContext = createContext<{
-    settings: Settings, setSettings: (settings: Settings) => void
+    settings: Settings;
+    setSettings: (settings: Settings) => void;
 }>({
     settings: {
-        measurements: 'metric',
-        temperature: 'celsius',
+        measurements: "metric",
+        temperature: "celsius",
     },
-    setSettings: () => {}
+    setSettings: () => {},
 });
 
 export default settingsContext;

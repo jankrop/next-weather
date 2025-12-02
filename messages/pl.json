@@ -1,29 +1,29 @@
 {
-  "common": {
-    "title": "Next weather",
-    "footer": {
-      "author": "Zrobione z \u2764 oraz \u2615 przez ",
-      "author-name": "Jana Kropiwnickiego",
-      "weather-data": "Dane pogodowe z ",
-      "openweathermap": "OpenWeatherMap"
+    "common": {
+        "title": "Next weather",
+        "footer": {
+            "author": "Zrobione z \u2764 oraz \u2615 przez ",
+            "author-name": "Jana Kropiwnickiego",
+            "weather-data": "Dane pogodowe z ",
+            "openweathermap": "OpenWeatherMap"
+        },
+        "units": {
+            "label": "Jednostka temperatury",
+            "celsius": "°C",
+            "fahrenheit": "°F",
+            "kelvin": "K"
+        }
     },
-    "units": {
-      "label": "Jednostka temperatury",
-      "celsius": "°C",
-      "fahrenheit": "°F",
-      "kelvin": "K"
+    "home-page": {
+        "header": "Precyzyjna prognoza pogody dla całego świata",
+        "search-bar": "Szukaj miast na całym świecie...",
+        "get-weather": "Sprawdź pogodę"
+    },
+    "weather": {
+        "forecast": "Prognoza",
+        "feels-like": "Odczuwalna: ",
+        "pressure": "Ciśnienie",
+        "humidity": "Wilgotność",
+        "wind": "Wiatr"
     }
-  },
-  "home-page": {
-    "header": "Precyzyjna prognoza pogody dla całego świata",
-    "search-bar": "Szukaj miast na całym świecie...",
-    "get-weather": "Sprawdź pogodę"
-  },
-  "weather": {
-    "forecast": "Prognoza",
-    "feels-like": "Odczuwalna: ",
-    "pressure": "Ciśnienie",
-    "humidity": "Wilgotność",
-    "wind": "Wiatr"
-  }
 }

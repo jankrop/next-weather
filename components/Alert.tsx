@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 export default function Alert({ children }: { children: ReactNode }) {
     return (
@@ -7,5 +7,5 @@ export default function Alert({ children }: { children: ReactNode }) {
                 {children}
             </div>
         </div>
-    )
+    );
 }
