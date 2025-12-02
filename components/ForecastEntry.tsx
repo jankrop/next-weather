@@ -4,7 +4,7 @@ import WeatherIcon from "@/components/WeatherIcon";
 import TemperatureConverter from "@/components/TemperatureConverter";
 
 export default function ForecastEntry({
-    weather, isSelected, onClick
+    weather, onClick
 } : {
     weather: CurrentWeather & { dt: number }, isSelected: boolean, onClick: () => void
 }) {
@@ -22,7 +22,7 @@ export default function ForecastEntry({
                     })}
                 </div>
             )}
-            <Card className="flex gap-3 p-3 text-xl items-center" onClick={onClick}>
+            <Card className={"flex gap-3 p-3 text-xl items-center"} onClick={onClick}>
                 <div className="w-16">
                     {hour.toString().padStart(2, "0")}:00
                 </div>

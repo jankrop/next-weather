@@ -5,7 +5,6 @@ import {useContext, useState} from "react";
 import settingsContext from "@/contexts/SettingsContext";
 import Link from "next/link";
 import {Settings, X} from "react-feather";
-import Card from "@/components/Card";
 
 export default function Header() {
     const { settings, setSettings } = useContext(settingsContext);
