@@ -8,7 +8,7 @@ import { Settings, X } from "react-feather";
 import { useLocale } from "use-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
     const { settings, setSettings } = useContext(settingsContext);
@@ -22,7 +22,7 @@ export default function Header() {
 
     const setMesaurements = (m: "metric" | "imperial") => {
         setSettings({ ...settings, measurements: m });
-    }
+    };
 
     const router = useRouter();
     const pathname = usePathname();
@@ -43,7 +43,7 @@ export default function Header() {
         router.push(url);
     };
 
-    const t = useTranslations("common")
+    const t = useTranslations("common");
 
     return (
         <>
@@ -128,7 +128,9 @@ export default function Header() {
                         </button>
                     </div>
                     <div className={"p-2 flex flex-col gap-3"}>
-                        <div className={"text-center"}>{t("settings.temperature")}</div>
+                        <div className={"text-center"}>
+                            {t("settings.temperature")}
+                        </div>
                         <div className={"flex justify-center gap-4"}>
                             <Toggle
                                 large
@@ -152,7 +154,9 @@ export default function Header() {
                                 K
                             </Toggle>
                         </div>
-                        <div className={"text-center"}>{t("settings.measurements")}</div>
+                        <div className={"text-center"}>
+                            {t("settings.measurements")}
+                        </div>
                         <div className={"flex justify-center gap-4"}>
                             <Toggle
                                 large
@@ -169,7 +173,9 @@ export default function Header() {
                                 ft
                             </Toggle>
                         </div>
-                        <div className={"text-center"}>{t("settings.language")}</div>
+                        <div className={"text-center"}>
+                            {t("settings.language")}
+                        </div>
                         <div className={"flex justify-center gap-4"}>
                             <Toggle
                                 large

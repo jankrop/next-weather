@@ -128,7 +128,9 @@ export default function Page() {
                                         {t("weather.pressure")}
                                     </div>
                                     <div className="text-2xl mb-3">
-                                        <PressureConverter hPa={currentWeather!.main.pressure} />
+                                        <PressureConverter
+                                            hPa={currentWeather!.main.pressure}
+                                        />
                                     </div>
                                     <div className="text-gray-400">
                                         {t("weather.humidity")}
@@ -157,7 +159,9 @@ export default function Page() {
                                     </div>
                                     <div className="text-xl flex justify-between">
                                         <div>
-                                            <SpeedConverter mps={currentWeather!.wind.speed} />
+                                            <SpeedConverter
+                                                mps={currentWeather!.wind.speed}
+                                            />
                                         </div>
                                         <div>{windDirection}</div>
                                     </div>
