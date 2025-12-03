@@ -62,7 +62,13 @@ export default function PlaceSearchForm({ className = "" }) {
                     },
                 })}
                 isValid={!errors.place}
-                onSuggestionSelect={(s) => setValue("place", s)}
+                onSuggestionSelect={(s) => {
+                    setValue("place", s);
+                }}
+                onSubmit={(s: string) => {
+                    setValue("place", s);
+                    handleSubmit(onSearch)();
+                }}
             />
             <Button
                 type="submit"

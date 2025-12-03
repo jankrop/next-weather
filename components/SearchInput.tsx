@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "react-feather";
-import { ComponentPropsWithoutRef, useEffect, useId, useState } from "react";
+import { ComponentPropsWithoutRef, useEffect, useId, useState, KeyboardEvent } from "react";
 
 export default function SearchInput({
     suggestions,
@@ -10,11 +10,13 @@ export default function SearchInput({
     onSuggestionSelect,
     onChange,
     onBlur,
+    onSubmit,
     ...props
-}: Omit<ComponentPropsWithoutRef<"input">, "defaultValue"> & {
+}: Omit<ComponentPropsWithoutRef<"input">, "defaultValue" | "onSubmit"> & {
     suggestions?: string[];
     loading?: boolean;
     isValid: boolean;
+    onSubmit: (value: string) => void;
     onSuggestionSelect: (suggestion: string) => void;
 }) {
     const inputId = useId();
@@ -22,11 +24,25 @@ export default function SearchInput({
     const [isFocused, setIsFocused] = useState(false);
     const [search, setSearch] = useState("");
     const [displaySuggestions, setDisplaySuggestions] = useState<string[]>([]);
+    const [focusedSuggestionId, setFocusedSuggestionId] = useState<number | null>(null);
 
     useEffect(() => {
         if (!loading && suggestions !== undefined)
             setDisplaySuggestions(suggestions);
     }, [loading, suggestions]);
+
+    function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+        if (displaySuggestions.length === 0) return;
+        if (event.key === "ArrowDown") {
+            const id = focusedSuggestionId === null ? 0 : focusedSuggestionId + 1;
+            setFocusedSuggestionId(id % displaySuggestions.length)
+            onSuggestionSelect(displaySuggestions[id]);
+        } else if (event.key === "ArrowUp") {
+            const id = focusedSuggestionId === null ? displaySuggestions.length - 1 : focusedSuggestionId - 1;
+            setFocusedSuggestionId(id % displaySuggestions.length)
+            onSuggestionSelect(displaySuggestions[id]);
+        }
+    }
 
     return (
         <div className="h-10.5 w-full md:max-w-105">
@@ -74,6 +90,7 @@ export default function SearchInput({
                                 if (onBlur) onBlur(e);
                             }}
                             onFocus={() => setIsFocused(true)}
+                            onKeyDown={handleKeyDown}
                             {...props}
                         />
                         <label htmlFor={inputId} className="hidden">
@@ -97,9 +114,13 @@ export default function SearchInput({
                                 key={index}
                                 onClick={() => {
                                     setSearch(suggestion);
-                                    onSuggestionSelect(suggestion);
+                                    onSubmit(suggestion);
                                 }}
-                                className="px-2 py-1 cursor-pointer hover:bg-primary hover:bg-clip-text hover:text-transparent overflow-hidden text-nowrap text-ellipsis"
+                                className={
+                                    "px-2 py-1 cursor-pointer overflow-hidden text-nowrap text-ellipsis " +
+                                    "hover:bg-primary hover:bg-clip-text hover:text-transparent " +
+                                    (focusedSuggestionId === index ? "bg-primary bg-clip-text text-transparent" : "")
+                                }
                             >
                                 {suggestion}
                             </div>
