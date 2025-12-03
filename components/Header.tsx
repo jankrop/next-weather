@@ -5,6 +5,9 @@ import { useContext, useState } from "react";
 import settingsContext from "@/contexts/SettingsContext";
 import { Link } from "@/i18n/navigation";
 import { Settings, X } from "react-feather";
+import { useLocale } from "use-intl";
+import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
     const { settings, setSettings } = useContext(settingsContext);
@@ -14,6 +17,25 @@ export default function Header() {
 
     const setTemperature = (temp: "celsius" | "fahrenheit" | "kelvin") => {
         setSettings({ ...settings, temperature: temp });
+    };
+
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const locale = useLocale();
+
+    const changeLocale = (newLocale: string) => {
+        if (newLocale === locale) return;
+
+        const segments = pathname.split("/");
+        segments[1] = newLocale;
+        const newPath = segments.join("/");
+
+        const queryString = searchParams.toString();
+        const url = queryString ? `${newPath}?${queryString}` : newPath;
+
+        router.push(url);
     };
 
     return (
@@ -47,6 +69,19 @@ export default function Header() {
                             onSelect={() => setTemperature("kelvin")}
                         >
                             K
+                        </Toggle>
+                        <div className="w-8" />
+                        <Toggle
+                            isSelected={locale === "en"}
+                            onSelect={() => changeLocale("en")}
+                        >
+                            EN
+                        </Toggle>
+                        <Toggle
+                            isSelected={locale === "pl"}
+                            onSelect={() => changeLocale("pl")}
+                        >
+                            PL
                         </Toggle>
                     </div>
                 </div>
@@ -95,6 +130,23 @@ export default function Header() {
                                 onSelect={() => setTemperature("kelvin")}
                             >
                                 K
+                            </Toggle>
+                        </div>
+                        <div className={"text-center"}>Language</div>
+                        <div className={"flex justify-center gap-4"}>
+                            <Toggle
+                                large
+                                isSelected={locale === "en"}
+                                onSelect={() => changeLocale("en")}
+                            >
+                                EN
+                            </Toggle>
+                            <Toggle
+                                large
+                                isSelected={locale === "pl"}
+                                onSelect={() => changeLocale("pl")}
+                            >
+                                PL
                             </Toggle>
                         </div>
                     </div>
