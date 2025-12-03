@@ -14,6 +14,8 @@ import useGeocodingQuery from "@/queries/useGeocodingQuery";
 import useWeatherQuery from "@/queries/useWeatherQuery";
 import useForecastQuery from "@/queries/useForecastQuery";
 import { useLocale } from "use-intl";
+import SpeedConverter from "@/components/SpeedConverter";
+import PressureConverter from "@/components/PressureConverter";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -126,7 +128,7 @@ export default function Page() {
                                         {t("weather.pressure")}
                                     </div>
                                     <div className="text-2xl mb-3">
-                                        {currentWeather!.main.pressure} hPa
+                                        <PressureConverter hPa={currentWeather!.main.pressure} />
                                     </div>
                                     <div className="text-gray-400">
                                         {t("weather.humidity")}
@@ -155,7 +157,7 @@ export default function Page() {
                                     </div>
                                     <div className="text-xl flex justify-between">
                                         <div>
-                                            {currentWeather!.wind.speed} m/s
+                                            <SpeedConverter mps={currentWeather!.wind.speed} />
                                         </div>
                                         <div>{windDirection}</div>
                                     </div>

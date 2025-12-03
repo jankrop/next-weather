@@ -8,16 +8,21 @@ import { Settings, X } from "react-feather";
 import { useLocale } from "use-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
+import {useTranslations} from "next-intl";
 
 export default function Header() {
     const { settings, setSettings } = useContext(settingsContext);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    const temperature = settings.temperature;
+    const { temperature, measurements } = settings;
 
     const setTemperature = (temp: "celsius" | "fahrenheit" | "kelvin") => {
         setSettings({ ...settings, temperature: temp });
     };
+
+    const setMesaurements = (m: "metric" | "imperial") => {
+        setSettings({ ...settings, measurements: m });
+    }
 
     const router = useRouter();
     const pathname = usePathname();
@@ -37,6 +42,8 @@ export default function Header() {
 
         router.push(url);
     };
+
+    const t = useTranslations("common")
 
     return (
         <>
@@ -69,6 +76,19 @@ export default function Header() {
                             onSelect={() => setTemperature("kelvin")}
                         >
                             K
+                        </Toggle>
+                        <div className="w-8" />
+                        <Toggle
+                            isSelected={measurements === "metric"}
+                            onSelect={() => setMesaurements("metric")}
+                        >
+                            m
+                        </Toggle>
+                        <Toggle
+                            isSelected={measurements === "imperial"}
+                            onSelect={() => setMesaurements("imperial")}
+                        >
+                            ft
                         </Toggle>
                         <div className="w-8" />
                         <Toggle
@@ -108,7 +128,7 @@ export default function Header() {
                         </button>
                     </div>
                     <div className={"p-2 flex flex-col gap-3"}>
-                        <div className={"text-center"}>Temperature units</div>
+                        <div className={"text-center"}>{t("settings.temperature")}</div>
                         <div className={"flex justify-center gap-4"}>
                             <Toggle
                                 large
@@ -132,7 +152,24 @@ export default function Header() {
                                 K
                             </Toggle>
                         </div>
-                        <div className={"text-center"}>Language</div>
+                        <div className={"text-center"}>{t("settings.measurements")}</div>
+                        <div className={"flex justify-center gap-4"}>
+                            <Toggle
+                                large
+                                isSelected={measurements === "metric"}
+                                onSelect={() => setMesaurements("metric")}
+                            >
+                                m
+                            </Toggle>
+                            <Toggle
+                                large
+                                isSelected={measurements === "imperial"}
+                                onSelect={() => setMesaurements("imperial")}
+                            >
+                                ft
+                            </Toggle>
+                        </div>
+                        <div className={"text-center"}>{t("settings.language")}</div>
                         <div className={"flex justify-center gap-4"}>
                             <Toggle
                                 large

@@ -7,11 +7,10 @@
             "weather-data": "Dane pogodowe z ",
             "openweathermap": "OpenWeatherMap"
         },
-        "units": {
-            "label": "Jednostka temperatury",
-            "celsius": "°C",
-            "fahrenheit": "°F",
-            "kelvin": "K"
+        "settings": {
+            "temperature": "Jednostki temperatury",
+            "measurements": "Jednostki miary",
+            "language": "Język"
         }
     },
     "home-page": {
