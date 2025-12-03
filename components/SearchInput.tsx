@@ -1,7 +1,13 @@
 "use client";
 
 import { Search } from "react-feather";
-import { ComponentPropsWithoutRef, useEffect, useId, useState, KeyboardEvent } from "react";
+import {
+    ComponentPropsWithoutRef,
+    useEffect,
+    useId,
+    useState,
+    KeyboardEvent,
+} from "react";
 
 export default function SearchInput({
     suggestions,
@@ -24,7 +30,9 @@ export default function SearchInput({
     const [isFocused, setIsFocused] = useState(false);
     const [search, setSearch] = useState("");
     const [displaySuggestions, setDisplaySuggestions] = useState<string[]>([]);
-    const [focusedSuggestionId, setFocusedSuggestionId] = useState<number | null>(null);
+    const [focusedSuggestionId, setFocusedSuggestionId] = useState<
+        number | null
+    >(null);
 
     useEffect(() => {
         if (!loading && suggestions !== undefined)
@@ -34,12 +42,16 @@ export default function SearchInput({
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
         if (displaySuggestions.length === 0) return;
         if (event.key === "ArrowDown") {
-            const id = focusedSuggestionId === null ? 0 : focusedSuggestionId + 1;
-            setFocusedSuggestionId(id % displaySuggestions.length)
+            const id =
+                focusedSuggestionId === null ? 0 : focusedSuggestionId + 1;
+            setFocusedSuggestionId(id % displaySuggestions.length);
             onSuggestionSelect(displaySuggestions[id]);
         } else if (event.key === "ArrowUp") {
-            const id = focusedSuggestionId === null ? displaySuggestions.length - 1 : focusedSuggestionId - 1;
-            setFocusedSuggestionId(id % displaySuggestions.length)
+            const id =
+                focusedSuggestionId === null
+                    ? displaySuggestions.length - 1
+                    : focusedSuggestionId - 1;
+            setFocusedSuggestionId(id % displaySuggestions.length);
             onSuggestionSelect(displaySuggestions[id]);
         }
     }
@@ -119,7 +131,9 @@ export default function SearchInput({
                                 className={
                                     "px-2 py-1 cursor-pointer overflow-hidden text-nowrap text-ellipsis " +
                                     "hover:bg-primary hover:bg-clip-text hover:text-transparent " +
-                                    (focusedSuggestionId === index ? "bg-primary bg-clip-text text-transparent" : "")
+                                    (focusedSuggestionId === index
+                                        ? "bg-primary bg-clip-text text-transparent"
+                                        : "")
                                 }
                             >
                                 {suggestion}

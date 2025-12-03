@@ -139,7 +139,7 @@ export default function Page() {
                                         {currentWeather!.main.humidity}%
                                     </div>
                                 </Card>
-                                <Card className="flex-1 px-6 flex flex-col justify-between items-stretch h-46">
+                                <Card className="flex-1 flex flex-col justify-between items-stretch h-46">
                                     <div className="text-gray-400 pb-1">
                                         {t("weather.wind")}
                                     </div>
@@ -157,13 +157,11 @@ export default function Page() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="text-xl flex justify-between">
-                                        <div>
-                                            <SpeedConverter
-                                                mps={currentWeather!.wind.speed}
-                                            />
-                                        </div>
-                                        <div>{windDirection}</div>
+                                    <div className="text-center">
+                                        <SpeedConverter
+                                            mps={currentWeather!.wind.speed}
+                                        />{" "}
+                                        {windDirection}
                                     </div>
                                 </Card>
                             </div>
