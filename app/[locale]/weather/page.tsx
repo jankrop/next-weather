@@ -43,6 +43,8 @@ export default function Page() {
 
     const t = useTranslations();
 
+    console.log(currentWeather, forecast);
+
     const windDirection = [
         "N",
         "NNE",

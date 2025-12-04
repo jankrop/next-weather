@@ -38,7 +38,7 @@ export default function PlaceSearchForm({ className = "" }) {
 
     return (
         <form
-            className={"flex gap-3 w-full max-w-160 px-4 " + className}
+            className={"flex justify-center gap-3 w-full px-4 " + className}
             onSubmit={handleSubmit(onSearch)}
         >
             <SearchInput
@@ -72,7 +72,7 @@ export default function PlaceSearchForm({ className = "" }) {
             />
             <Button
                 type="submit"
-                className={"hidden sm:inline whitespace-nowrap"}
+                className={"hidden sm:block whitespace-nowrap"}
             >
                 {t("get-weather")}
             </Button>

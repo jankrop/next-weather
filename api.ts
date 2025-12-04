@@ -24,6 +24,11 @@ export async function fetchGeocodingData(
     const res = await fetch(
         `/api/geocoding?placeName=${placeName}&language=${lang}`,
     );
+    if (!res.ok)
+        return Promise.reject(
+            new Error(`Received response code: ${res.status}`),
+        );
+
     const data: MaptilerResponse = await res.json();
     return mapMaptilerResponseToPlaces(data);
 }
@@ -33,9 +38,12 @@ export async function fetchCurrentWeather(
     lon?: number,
     lang: string = "en",
 ): Promise<CurrentWeather> {
-    const res = await fetch(
-        `/api/weather?lat=${lat}&lon=${lon}&lang=${lang}`,
-    );
+    const res = await fetch(`/api/weather?lat=${lat}&lon=${lon}&lang=${lang}`);
+    if (!res.ok)
+        return Promise.reject(
+            new Error(`Received response code: ${res.status}`),
+        );
+
     return res.json();
 }
 
@@ -44,8 +52,11 @@ export async function fetchForecast(
     lon?: number,
     lang: string = "en",
 ): Promise<Forecast> {
-    const res = await fetch(
-        `/api/forecast?lat=${lat}&lon=${lon}&lang=${lang}`,
-    );
+    const res = await fetch(`/api/forecast?lat=${lat}&lon=${lon}&lang=${lang}`);
+    if (!res.ok)
+        return Promise.reject(
+            new Error(`Received response code: ${res.status}`),
+        );
+
     return res.json();
 }
