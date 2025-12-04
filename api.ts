@@ -2,9 +2,6 @@ import CurrentWeather from "@/types/CurrentWeather";
 import Place from "@/types/Place";
 import Forecast from "@/types/Forecast";
 
-const OWM_API_KEY = "4083d44a25bea4846e95b56d01ac3795";
-const MAPTILER_API_KEY = "3cvHJyiS10vry0lSxTqY";
-
 type MaptilerResponse = {
     features: {
         center: number[];
@@ -25,7 +22,7 @@ export async function fetchGeocodingData(
     lang: string = "en",
 ): Promise<Place[]> {
     const res = await fetch(
-        `https://api.maptiler.com/geocoding/${placeName}.json?key=${MAPTILER_API_KEY}&language=${lang}&types=joint_municipality,joint_submunicipality,municipality,municipal_district,locality,place`,
+        `/api/geocoding?placeName=${placeName}&language=${lang}`,
     );
     const data: MaptilerResponse = await res.json();
     return mapMaptilerResponseToPlaces(data);
@@ -37,7 +34,7 @@ export async function fetchCurrentWeather(
     lang: string = "en",
 ): Promise<CurrentWeather> {
     const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=${lang}&appid=${OWM_API_KEY}`,
+        `/api/weather?lat=${lat}&lon=${lon}&lang=${lang}`,
     );
     return res.json();
 }
@@ -48,7 +45,7 @@ export async function fetchForecast(
     lang: string = "en",
 ): Promise<Forecast> {
     const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=${lang}&appid=${OWM_API_KEY}`,
+        `/api/forecast?lat=${lat}&lon=${lon}&lang=${lang}`,
     );
     return res.json();
 }
